@@ -1,0 +1,26 @@
+{
+  "name": "book-record-management",
+  "version": "1.0.0",
+  "description": "librery system",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChethanTN7/book-record-management.git"
+  },
+  "author": "Chethan T N",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChethanTN7/book-record-management/issues"
+  },
+  "homepage": "https://github.com/ChethanTN7/book-record-management#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

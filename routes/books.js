@@ -45,8 +45,6 @@ router.get("/issued/by-user", (req, res) => {
   });
 });
 
-module.exports = router;
-
 // get book by id
 router.get("/:id", (req, res) => {
   const { id } = req.params;
@@ -65,3 +63,86 @@ router.get("/:id", (req, res) => {
     data: book,
   });
 });
+
+// Add a new book
+router.post("/", (req, res) => {
+  const { data } = req.body;
+
+  if (!data) {
+    return res.status(400).json({
+      success: false,
+      message: "No data to add a book",
+    });
+  }
+
+  const book = books.find((each) => each.id === data.id);
+  if (book) {
+    return res.status(400).json({
+      success: false,
+      message: "Book already exsist!!!",
+    });
+  }
+
+  const allBooks = { ...books, data };
+  return res.status(201).json({
+    success: false,
+    message: "New book added!!",
+    data: allBooks,
+  });
+});
+
+// Updating a book by id
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { data } = req.body;
+
+  const book = books.find((each) => each.id === id);
+  if (!book) {
+    return res.status(400).json({
+      success: false,
+      message: "Book not found for this id!!",
+    });
+  }
+
+  const updatedData = books.map((each) => {
+    if (each.id === id) {
+      return { ...each, ...data };
+    }
+    return each;
+  });
+
+  return res.status(200).json({
+    success: true,
+    message: "Updated the book by their id",
+    data: updatedData,
+  });
+});
+
+router.get("/subscription-details/:id", (req, res) => {
+  const { id } = req.params;
+  const user = users.find((each) => each.id === id);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User with the id don't exist!!!",
+    });
+  }
+
+  const getDateInDays = (data = "") => {
+    let date;
+    if (data === "") {
+      date = new Date();
+    } else {
+      date = new Date(data);
+    }
+    let days = Math.floor(data / (1000 * 60 * 60 * 24));
+  };
+  const subscriptionType = (data) => {
+    if (user.subscriptionType === "Basic") date = date + 90;
+    else if (user.subscriptionType === "Standard") date += 180;
+    else if (user.subscriptionType === "Premium") date += 365;
+  };
+});
+
+module.exports = router;
